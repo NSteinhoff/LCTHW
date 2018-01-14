@@ -1,7 +1,8 @@
-CFLAGS=-Wall -g
+CFLAGS=-Wall -g  # Set global compiler flags
+TARGETS=$(shell ls | egrep 'ex[[:digit:]]+.c$$' | sed 's/\.c//')  # Collect targets from source files
 
-all: ex1 ex3 ex4 ex7
+all: ${TARGETS}
 
 clean:
-	rm -f ex1 ex3 ex4 ex7
-	rm -rf *.dSYM
+	find -E . -type f -regex '\./ex[[:digit:]]+$$' -print -delete  # Delete binaries
+	find -E . -type d -regex '\./ex[[:digit:]]+\.dSYM$$' -print -exec rm -r {} +  # Delete helper files
